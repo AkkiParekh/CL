@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+		<meta name="generator" content="Hugo 0.88.1">
+		<title>Cover Maker</title>
+		<link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="assets/dist/plugins/html2canvas.min.js"></script>
+		<script src="assets/dist/plugins/jspdf.umd.min.js"></script>
+		<script src="assets/dist/plugins/FileSaver.js"></script>
+		<script src="assets/dist/plugins/html-docx.js"></script>
+		<link href="maker.css" rel="stylesheet">
+	</head>
+	<body>		
+		<p class="hideOnProcess text-center p-5">
+			<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop">Fill Information</button>
+			<button id="pdfDownloadBtn" class="btn btn-secondary" type="button">PDF Download</button>
+			<button id="docxDownloadBtn" class="btn btn-success" type="button">DOCX Download</button>			
+			<button id="imgDownloadBtn" class="btn btn-danger" type="button">Image Download</button>			
+		</p>
+		<div class="hideOnProcess offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+			<div class="offcanvas-header bg-light">
+				<h5 id="offcanvasTopLabel">Fill Details</h5>
+				<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="offcanvas-body">
+				<div class="row">
+					<div class="col-12">
+						<div class="row">
+							<div class="col">
+								<label class="small">Current Date</label>
+								<input id="dateInput" type="date" class="form-control">
+							</div>
+							<div class="col">
+								<label class="small">Current Profile</label>
+								<input id="profileInput" type="text" class="form-control">
+							</div>
+							<div class="col">
+								<label class="small">Company Name</label>
+								<input id="companyNameInput" type="text" class="form-control">
+							</div>
+						</div>
+						<div class="row mt-4">							
+							<div class="col">
+								<label class="small">Company Points</label>
+								<textarea id="companyPointsInput" class="form-control" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="row mt-4">							
+							<div class="col text-end">
+								<button id="setInfoBtn" class="btn btn-outline-primary me-2" type="submit">Set Information</button>
+								<button id="resetInfoBtn" class="btn btn-outline-danger me-2" type="reset">Reset</button>
+								<button id="cancelInfoBtn" data-bs-dismiss="offcanvas" class="btn btn-outline-dark" type="reset">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<main class="showOnProcess pt-5">
+			<div class="container w-75">
+				<div class="row p-4 justify-content-end">
+					<div class="col-auto">
+						<strong class="d-block">Ankit Parekh</strong>
+						<strong class="d-block">Mumbai, India</strong>
+						<strong class="d-block">ankit77parekh@gmail.com</strong>
+						<strong class="d-block">9920353532</strong>
+					</div>
+				</div>
+				<div class="row p-4 mb-5">
+					<div class="col">
+						<p class="currentDate mb-1">7th Sep 2021</p>
+						<p class="companyName fw-bolder">friendsurance</p>
+						<p class="text-center">Re: Application for the position of <span class="profileName">Senior Software Engineer - Frontend</span></p>
+						<p>Dear Sir/Madam,</p>
+						<p>
+							I am writing in application for the <span class="profileName">Senior Software Engineer - Frontend</span> at <span class="companyName fw-bolder">friendsurance</span> as advertised
+							in Stackoverflow. My training and experience in the field of computer programming and web design,
+							along with my ability to do coding in <span class="fw-bolder">Javascript, Typescript, frameworks like React-js, Angular,</span> and also worked as a <span class="fw-bolder">UI Architect for multiple projects</span> which makes me the eligible candidate for the job. I
+							know that I would be a valuable addition to the team at <span class="companyName fw-bolder">friendsurance</span>.
+						</p>
+						<p>
+							I have a <span class="fw-bolder">B.E in Computer Science</span> from Mumbai University and have more than <span class="fw-bolder">11 years</span> of
+							experience as a Front end developer and Architect. I have advanced knowledge of System design,
+							AngularJS, React, NodeJS, Micro-Frontend architecture and CI/CD deployment using Docker and also team handling experience.
+						</p>
+						<p>
+							In my most recent role at <span class="fw-bolder">Codifyd.inc</span>, I had implemented projects from Scratch from a Frontend standpoint, which improved new domain acquisition for my organization.
+						</p>
+						<p>
+							I am excited to be applying to <span class="companyName fw-bolder">friendsurance</span> and for the opportunity to work with strong ownership,
+							working like as an architect. I truly admire how <span class="companyPoints">friendsurance provides digital solutions in insurance
+							services for banks or insurance companies and their customers</span> and would feel privileged to be a
+							member of the team at <span class="companyName fw-bolder">friendsurance</span>..
+						</p>
+						<p>Please find my attached resume for more details. Feel free to contact me directly if you require anything further.</p>
+						<p>Thank you for your time and consideration. I look forward to hearing from you.</p>
+						<p class="my-5">
+							<span>Sincerely,</span>
+							<span class="d-block fw-bolder">[Ankit Parekh]</span>
+						</p>					
+					</div>
+				</div>
+			</div>
+		</main>		
+	</body>
+	<script type="text/javascript">
+		const bindButtonEvents = () => {
+			$("#setInfoBtn").on("click", function(e){
+				$(".currentDate").text($.trim($("#dateInput").val()));
+				$(".profileName").text($.trim($("#profileInput").val()));
+				$(".companyName").text($.trim($("#companyNameInput").val()));
+				$(".companyPoints").text($.trim($("#companyPointsInput").val()));
+			});
+			$("#resetInfoBtn").on("click", function(e){				
+				$(".currentDate").text(new Date().toLocaleDateString());
+				$(".profileName").text('Senior Software Engineer - Frontend');
+				$(".companyName").text('friendsurance');
+				$(".companyPoints").text('friendsurance provides digital solutions in insurance services for banks or insurance companies and their customers');
+			});
+			$('#pdfDownloadBtn, #imgDownloadBtn').click(function() {
+				$(".hideOnProcess").hide();
+				$(".showOnProcess").show();
+				try{
+					let cache_width = $("main").width(); 
+					const getCanvas = () => {  
+						const a4 = [595.28, 841.89];
+				        $("main").width((a4[0] * 1.5)).css('max-width', 'none');  
+				        return html2canvas($("main"), {  
+				            imageTimeout: 2000,  
+				            removeContainer: true,
+				            allowTaint:true
+				        });  
+				    };
+					getCanvas().then(function (canvas) {  
+			            let img = canvas.toDataURL("image/png"),  
+		            		doc = new jsPDF({  
+			                 	unit: 'px',  
+			                 	format: 'a4'  
+			             	});  
+			            doc.addImage(img, 'JPEG', -30, 0);
+			            doc.save('Cover-Letter-Ankit-Parekh.pdf');
+			            $("main").width(cache_width);
+			        });
+				}catch(e){
+					console.log(e);
+				}finally{
+					$(".hideOnProcess, .showOnProcess").show();
+				}
+			});
+			$('#docxDownloadBtn').click(function(){
+				$(".hideOnProcess").hide();
+				$(".showOnProcess").show();
+				try{
+					var content = '<!DOCTYPE html>' + document.getElementsByTagName('HTML')[0].outerHTML;
+					var converted = htmlDocx.asBlob(content, {orientation: 'portrait'});
+					saveAs(converted, 'Cover-Letter-Ankit-Parekh.docx');
+					$(".hideOnProcess").show();
+				}catch(e){
+					console.log(e);
+				}finally{
+					$(".hideOnProcess, .showOnProcess").show();
+				}
+			});
+		};
+		$(document).ready(function(){
+			bindButtonEvents();
+		});
+	</script>
+</html>
